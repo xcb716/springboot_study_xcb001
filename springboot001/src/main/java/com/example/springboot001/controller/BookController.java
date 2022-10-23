@@ -1,6 +1,7 @@
 package com.example.springboot001.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.springboot001.common.R;
 import com.example.springboot001.entity.Book;
 import com.example.springboot001.service.inte.IBookService;
 import org.springframework.web.bind.annotation.*;
@@ -15,27 +16,32 @@ public class BookController {
     private IBookService bookService;
 
     @PostMapping
-    public Boolean save(@RequestBody Book book) {
-        return bookService.insert(book);
+    public R save(@RequestBody Book book) {
+        Boolean flag = bookService.insert(book);
+        return new R(flag);
     }
 
     @DeleteMapping("/{id}")
-    public Boolean delete(@PathVariable Integer id) {
-        return bookService.delete(id);
+    public R delete(@PathVariable Integer id) {
+        Boolean flag = bookService.delete(id);
+        return new R(flag);
     }
 
     @PutMapping
-    public Boolean update(@RequestBody Book book) {
-        return bookService.modify(book);
+    public R update(@RequestBody Book book) {
+        Boolean flag = bookService.modify(book);
+        return new R(flag);
     }
 
     @GetMapping
-    public List<Book> getAll(Integer id) {
-        return bookService.list();
+    public R getAll(Integer id) {
+        List<Book> bookList = bookService.list();
+        return new R(true, bookList);
     }
 
     @GetMapping("/{id}")
-    public Book getById(@PathVariable Integer id) {
-        return bookService.getById(id);
+    public R getById(@PathVariable Integer id) {
+        Book book = bookService.getById(id);
+        return new R(true, book);
     }
 }
